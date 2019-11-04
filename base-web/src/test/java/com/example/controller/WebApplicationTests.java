@@ -1,4 +1,4 @@
-package com.example.web;
+package com.example.controller;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

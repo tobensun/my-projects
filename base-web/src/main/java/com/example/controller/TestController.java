@@ -1,11 +1,9 @@
-package com.example.web;
+package com.example.controller;
 
-import lombok.Data;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -15,9 +13,4 @@ public class TestController {
     public void test(@Valid TestBean b){
 
     }
-}
-@Data
-class Page{
-    int row;
-    int index;
 }
