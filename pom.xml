@@ -21,6 +21,26 @@
         <module>base-pay-alipay</module>
         <module>base-redis</module>
         <module>base-web</module>
+        <module>base-shiro</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Swagger UI dependency -->
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>2.6.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>2.6.1</version>
+            </dependency>
+            <!-- Swagger UI dependency -->
+
+        </dependencies>
+    </dependencyManagement>
 
 </project>
