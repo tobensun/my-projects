@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="APP_NAME" value="admin-service"/>
+    <property name="LOG_PATH" value="/root/java_dev/game-service/log/${APP_NAME}"/>
+    <property name="LOG_FILE_APPLICATION" value="${LOG_PATH}/application.log"/>
+    <!-- 控制台输出 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <property name="SERIOUS_PATTERN"
+              value="[%d{yyyy-MM-dd HH:mm:ss:SSS}] - [%-5p] - [%15C{1}:%L] - %m%n"/>
+    <!-- 按照每天生成日志文件 -->
+    <appender name="APPLICATION" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_FILE_APPLICATION}</file>
+        <encoder>
+            <pattern>${SERIOUS_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_APPLICATION}.%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <maxHistory>50</maxHistory>
+            <maxFileSize>50MB</maxFileSize>
+            <totalSizeCap>5GB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <!-- 打印sql日志 -->
+    <logger name="org.hibernate.SQL" level="DEBUG"/>
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="trace"></logger>
+    <!-- 根据环境输出日志 -->
+    <springProfile name="loc">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="!loc">
+        <logger name="STATISTICS" additivity="false">
+            <level>INFO</level>
+            <appender-ref ref="STATISTICS"/>
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="APPLICATION"/>
+        </root>
+    </springProfile>
+</configuration>
